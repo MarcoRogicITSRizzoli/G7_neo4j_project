@@ -1,2 +1,3 @@
-from database import *
+from database import connection
 
+connection()
