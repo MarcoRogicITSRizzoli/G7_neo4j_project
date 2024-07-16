@@ -1,4 +1,4 @@
-from database import connection
+from database import *
 
 def create_persona(nome, cognome):
     driver = get_db()
