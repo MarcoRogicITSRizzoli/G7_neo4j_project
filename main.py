@@ -1,5 +1,5 @@
-from neo4j import GraphDatabase
-from richieste import find_cells_by_persona,find_personas_by_cell,find_personas_by_radius
+from database import *
+from richieste import *
 
 def main():
     while True:
