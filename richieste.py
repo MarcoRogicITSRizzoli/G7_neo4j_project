@@ -1,4 +1,4 @@
-from database import get_db
+from database import *
 
 def find_cells_by_persona(data, ora, nome, cognome):
     driver = get_db()
