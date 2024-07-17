@@ -1,5 +1,9 @@
 from database import *
 from richieste import *
+import os
+
+def clear_screen():
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 def main():
     while True:
@@ -8,6 +12,8 @@ def main():
         print("3. Persone entro un certo raggio da una Cella in una data e ora specifica")
         print("4. Esci")
         choice = input("Scegli un'opzione: ")
+        
+        clear_screen()
 
         if choice == '1':
             nome = input("Nome Persona: ")
@@ -18,6 +24,7 @@ def main():
             print("Le sim di questa persona si sono collegate alla/e seguenti cella/e:")
             for cella in celle:
                 print(f"Cella ID: {cella['c.id']}, Latitudine: {cella['c.latitudine']}, Longitudine: {cella['c.longitudine']}")
+            input("\nPremi Invio per continuare...")
 
         elif choice == '2':
             cella_id = input("ID Cella: ")
@@ -27,6 +34,7 @@ def main():
             print("Persone collegate alla Cella:")
             for persona in persone:
                 print(f"Persona ID: {persona['p.id']}, Nome: {persona['p.nome']}, Cognome: {persona['p.cognome']}")
+            input("\nPremi Invio per continuare...")
 
         elif choice == '3':
             latitudine = float(input("Latitudine: "))
@@ -38,12 +46,14 @@ def main():
             print("Persone entro il raggio specificato:")
             for persona in persone:
                 print(f"Persona ID: {persona['p.id']}, Nome: {persona['p.nome']}, Cognome: {persona['p.cognome']}")
+            input("\nPremi Invio per continuare...")
 
         elif choice == '4':
             break
 
         else:
             print("Scelta non valida. Riprova.")
+            input("\nPremi Invio per continuare...")
 
 if __name__ == "__main__":
     main()
