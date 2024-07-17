@@ -1,5 +1,5 @@
 from neo4j import GraphDatabase
-from richieste import localizzare_persona, trovare_sospetti, persone_nelle_vicinanze
+from richieste import find_cells_by_persona,find_personas_by_cell,find_personas_by_radius
 
 def main():
     while True:

@@ -25,6 +25,7 @@ def find_personas_by_cell(data, ora, cella_id):
         )
     driver.close()
     return [record for record in result]
+
 def find_personas_by_radius(data, ora, latitudine, longitudine, raggio):
     driver = get_db()
     with driver.session() as session:
