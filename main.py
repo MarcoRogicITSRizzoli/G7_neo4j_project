@@ -23,7 +23,7 @@ def main():
             celle = find_cells_by_persona(data, ora, nome, cognome)
             print("Le sim di questa persona si sono collegate alla/e seguenti cella/e:")
             for cella in celle:
-                print(f"Cella ID: {cella['c.id']}, Latitudine: {cella['c.latitudine']}, Longitudine: {cella['c.longitudine']}")
+                print(f"Cella ID: {cella['c.id']}, Nome Cella: {cella['c.nome']}, Latitudine: {cella['c.latitudine']}, Longitudine: {cella['c.longitudine']}")
             input("\nPremi Invio per continuare...")
 
         elif choice == '2':

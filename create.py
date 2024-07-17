@@ -40,13 +40,13 @@ def create_posseduta_da(persona_id, sim_id):
         )
     driver.close()
     
-def create_connessa_a(sim_id, cella_id, data, ora):
+def create_connessa_a(sim_id, cella_id, data_inizio, data_fine, ora_inizio, ora_fine):
     driver = get_db()
     with driver.session() as session:
         session.run(
             "MATCH (s:Sim {id: $sim_id}), (c:Cella {id: $cella_id})"
-            "CREATE (s)-[:CONNESSO_A {date: $data, time: $ora}]->(c)",
-            sim_id=sim_id, cella_id=cella_id, data=data, ora=ora
+            "CREATE (s)-[:CONNESSO_A {data_inizio: $data_inizio, data_fine: $data_fine, ora_inizio: $ora_inizio, ora_fine: $ora_fine}]->(c)",
+            sim_id=sim_id, cella_id=cella_id, data_inizio=data_inizio, data_fine=data_fine, ora_inizio=ora_inizio, ora_fine=ora_fine
         )
     driver.close()
 
@@ -55,7 +55,7 @@ def main():
     sim_id = create_sim("123456789")
     cella_id = create_cella(45.47709, 9.15385, "Zona Centrale")
     create_posseduta_da(persona_id, sim_id)
-    create_connessa_a(sim_id, cella_id, "2024-09-15", "10:30:00")
+    create_connessa_a(sim_id, cella_id, "2024-09-15", "2024-10-14", "10:30:00", "10:30:00")
     
     persona_id1 = create_persona('Mirko', 'La Rocca')
     persona_id2 = create_persona('Marco', 'Rogic')
@@ -76,10 +76,10 @@ def main():
     create_posseduta_da(persona_id3, sim_id3)
     create_posseduta_da(persona_id4, sim_id4)
     
-    create_connessa_a(sim_id1, cella_id1, '2024-10-04', '12:00:00')
-    create_connessa_a(sim_id2, cella_id2, '2024-10-04', '12:33:00')
-    create_connessa_a(sim_id3, cella_id3, '2024-10-04', '12:33:00')
-    create_connessa_a(sim_id4, cella_id2, '2024-10-04', '14:00:00')
+    create_connessa_a(sim_id1, cella_id1, '2024-10-04', '2024-11-04', '12:00:00', '12:00:00')
+    create_connessa_a(sim_id2, cella_id2, '2024-10-04', '2024-11-04', '12:33:00', '12:00:00')
+    create_connessa_a(sim_id3, cella_id3, '2024-10-04', '2024-11-04', '12:33:00', '12:00:00')
+    create_connessa_a(sim_id4, cella_id2, '2024-10-04', '2024-11-04', '14:00:00', '12:00:00')
 
 if __name__ == "__main__":
     main()
