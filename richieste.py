@@ -5,7 +5,7 @@ def find_cells_by_persona(data, ora, nome, cognome):
     with driver.session() as session:
         result = session.run(
             """
-            MATCH (p:Persona {nome: $nome, cognome: $cognome})-[:POSSIEDE]->(s:Sim)-[r:CONNESSO_A {date: $data, time: $ora}]->(c:Cella)
+            MATCH (p:Persona {nome: $nome, cognome: $cognome})-[:POSSIEDE]->(s:Sim)-[r:CONNESSO_A {data_inizio: $data, ora_inizio: $ora}]->(c:Cella)
             RETURN c.id, c.latitudine, c.longitudine, c.nome
             """,
             nome=nome, cognome=cognome, data=data, ora=ora
@@ -19,7 +19,7 @@ def find_personas_by_cell(data, ora, cella_id):
     with driver.session() as session:
         result = session.run(
             """
-            MATCH (p:Persona)-[:POSSIEDE]->(s:Sim)-[r:CONNESSO_A {date: $data, time: $ora}]->(c:Cella {id: $cella_id})
+            MATCH (p:Persona)-[:POSSIEDE]->(s:Sim)-[r:CONNESSO_A {data_inizio: $data, ora_inizio: $ora}]->(c:Cella {id: $cella_id})
             RETURN p.id, p.nome, p.cognome
             """,
             cella_id=cella_id, data=data, ora=ora
@@ -33,9 +33,9 @@ def find_personas_by_radius(data, ora, latitudine, longitudine, raggio):
     with driver.session() as session:
         result = session.run(
             """
-            MATCH (p:Persona)-[:POSSIEDE]->(s:Sim)-[r:CONNESSO_A {date: $data, time: $ora}]->(c:Cella)
+            MATCH (p:Persona)-[:POSSIEDE]->(s:Sim)-[r:CONNESSO_A {data_inizio: $data, ora_inizio: $ora}]->(c:Cella)
             WHERE point.distance(point({latitude: c.latitudine, longitude: c.longitudine}), point({latitude: $latitudine, longitude: $longitudine})) <= $raggio
-            RETURN p.id, p.nome, p.cognome
+            RETURN p.id, p.nome, p.cognome, c.nome AS cella_nome
             """,
             data=data, ora=ora, latitudine=latitudine, longitudine=longitudine, raggio=raggio
         )

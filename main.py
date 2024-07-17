@@ -45,7 +45,7 @@ def main():
             persone = find_personas_by_radius(data, ora, latitudine, longitudine, raggio)
             print("Persone entro il raggio specificato:")
             for persona in persone:
-                print(f"Persona ID: {persona['p.id']}, Nome: {persona['p.nome']}, Cognome: {persona['p.cognome']}")
+                print(f"Persona ID: {persona['p.id']}, Nome: {persona['p.nome']}, Cognome: {persona['p.cognome']}, Nome Cella: {persona['cella_nome']}")
             input("\nPremi Invio per continuare...")
 
         elif choice == '4':
