@@ -40,13 +40,13 @@ def create_posseduta_da(persona_id, sim_id):
         )
     driver.close()
     
-def create_connessa_a(sim_id, cella_id, datetime):
+def create_connessa_a(sim_id, cella_id, data, ora):
     driver = get_db()
     with driver.session() as session:
         session.run(
             "MATCH (s:Sim {id: $sim_id}), (c:Cella {id: $cella_id})"
             "CREATE (s)-[:CONNESSO_A {date: $data, time: $ora}]->(c)",
-            sim_id=sim_id, cella_id=cella_id, datetime=datetime
+            sim_id=sim_id, cella_id=cella_id, data=data, ora=ora
         )
     driver.close()
 
