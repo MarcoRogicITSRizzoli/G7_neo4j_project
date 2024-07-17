@@ -3,9 +3,9 @@ from richieste import *
 
 def main():
     while True:
-        print("1. Lv 1: Celle collegate a Persona in una data e ora specifica")
-        print("2. Lv 2: Persone collegate a una Cella in una data e ora specifica")
-        print("3. Lv 3: Persone entro un certo raggio da una Cella in una data e ora specifica")
+        print("1. Celle collegate a Persona in una data e ora specifica")
+        print("2. Persone collegate a una Cella in una data e ora specifica")
+        print("3. Persone entro un certo raggio da una Cella in una data e ora specifica")
         print("4. Esci")
         choice = input("Scegli un'opzione: ")
 
