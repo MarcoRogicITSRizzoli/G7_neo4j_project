@@ -49,7 +49,14 @@ def create_connessa_a(sim_id, cella_id, datetime):
             sim_id=sim_id, cella_id=cella_id, datetime=datetime
         )
     driver.close()
-def create_dati():
+
+def main():
+    persona_id = create_persona("Giorgio", "Ciampi")
+    sim_id = create_sim("123456789")
+    cella_id = create_cella("45.47709", "9.15385", "Zona Centrale")
+    create_posseduta_da(persona_id, sim_id)
+    create_connessa_a(sim_id, cella_id, "2024-09-15T10:30:00")
+    
     create_persona('Mirko', 'La\'Rocca')
     create_persona('Marco', 'Rogic')
     create_persona('Michele', 'Potsios')
@@ -64,7 +71,7 @@ def create_dati():
     create_cella("45.464203", "9.189982", "zona est" )
     create_cella("40.851775", "14.268124","zona ovest" )
     
-    create_posseduta_da('Mirko', 'La\'Rocca', '11111111')
+    create_posseduta_da(persona_id, )
     create_posseduta_da('Marco', 'Rogic', '22222222')
     create_posseduta_da('Michele', 'Potsios', '33333333')
     create_posseduta_da('Mario', 'Capana', '44444444')
@@ -73,13 +80,6 @@ def create_dati():
     create_connessa_a('22222222', '2022-10-04', '12:33:00')
     create_connessa_a('33333333', '2022-10-04', '12:33:00')
     create_connessa_a('44444444', '2022-10-04', '14:00:00')
-def main():
-    persona_id = create_persona("Giorgio", "Ciampi")
-    sim_id = create_sim("123456789")
-    cella_id = create_cella("45.47709", "9.15385", "Zona Centrale")
-    create_posseduta_da(persona_id, sim_id)
-    create_connessa_a(sim_id, cella_id, "2024-09-15T10:30:00")
-    create_dati()
 
 if __name__ == "__main__":
     main()
