@@ -1,33 +1,27 @@
-def localizzare_persona(session, nome, data_inizio, data_fine):
-    with session.begin_transaction() as tx:
-        query = (
-            "MATCH (p:Persona {nome: $nome})-[:POSSEDUTA_DA]->(s:Sim)-[r:CONNESSA_A]->(c:CellaTelefonica) "
-            "WHERE r.data >= $data_inizio AND r.data <= $data_fine "
-            "RETURN p.nome, s.numero, c.id, r.data, r.orario"
-        )
-        result = tx.run(query, nome=nome, data_inizio=data_inizio, data_fine=data_fine)
-        for record in result:
-            print(record)
+from database import get_db
 
-def trovare_sospetti(session, data_ora, cella):
-    with session.begin_transaction() as tx:
-        query = (
-            "MATCH (p:Persona)-[:POSSEDUTA_DA]->(s:Sim)-[r:CONNESSA_A]->(c:CellaTelefonica {id: $cella}) "
-            "WHERE r.data = $data_ora "
-            "RETURN p.nome, s.numero, c.id, r.data, r.orario"
+def find_cells_by_persona(data, ora, nome, cognome):
+    driver = get_db()
+    with driver.session() as session:
+        result = session.run(
+            """
+            MATCH (p:Persona {nome: $nome, cognome: $cognome})-[:POSSIEDE]->(s:Sim)-[r:CONNESSO_A {data_ora: $data_ora}]->(c:Cella)
+            RETURN c.id, c.latitudine, c.longitudine
+            """,
+            nome=nome, cognome=cognome, data_ora=f"{data}T{ora}"
         )
-        result = tx.run(query, data_ora=data_ora, cella=cella)
-        for record in result:
-            print(record)
+    driver.close()
+    return [record for record in result]
 
-def persone_nelle_vicinanze(session, data_ora, latitudine, longitudine, raggio):
-    with session.begin_transaction() as tx:
-        query = (
-            "MATCH (p:Persona)-[:POSSEDUTA_DA]->(s:Sim)-[r:CONNESSA_A]->(c:CellaTelefonica) "
-            "WHERE point.distance(point({latitude: c.latitudine, longitudine: c.longitudine}), point({latitudine: $latitudine, longitudine: $longitudine})) <= $raggio "
-            "AND r.data = $data_ora "
-            "RETURN p.nome, s.numero, c.id, r.data, r.orario"
+def find_personas_by_cell(data, ora, cella_id):
+    driver = get_db()
+    with driver.session() as session:
+        result = session.run(
+            """
+            MATCH (p:Persona)-[:POSSIEDE]->(s:Sim)-[r:CONNESSO_A {data_ora: $data_ora}]->(c:Cella {id: $cella_id})
+            RETURN p.id, p.nome, p.cognome
+            """,
+            cella_id=cella_id, data_ora=f"{data}T{ora}"
         )
-        result = tx.run(query, data_ora=data_ora, latitudine=latitudine, longitudine=longitudine, raggio=raggio)
-        for record in result:
-            print(record)
+    driver.close()
+    return [record for record in result]
