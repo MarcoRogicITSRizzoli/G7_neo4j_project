@@ -57,7 +57,7 @@ def main():
     create_posseduta_da(persona_id, sim_id)
     create_connessa_a(sim_id, cella_id, "2024-09-15", "10:30:00")
     
-    persona_id1 = create_persona('Mirko', 'La\'Rocca')
+    persona_id1 = create_persona('Mirko', 'La Rocca')
     persona_id2 = create_persona('Marco', 'Rogic')
     persona_id3 = create_persona('Michele', 'Potsios')
     persona_id4 = create_persona('Mario', 'Campana')
