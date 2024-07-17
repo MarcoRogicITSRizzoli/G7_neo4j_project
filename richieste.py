@@ -25,3 +25,16 @@ def find_personas_by_cell(data, ora, cella_id):
         )
     driver.close()
     return [record for record in result]
+def find_personas_by_radius(data, ora, latitudine, longitudine, raggio):
+    driver = get_db()
+    with driver.session() as session:
+        result = session.run(
+            """
+            MATCH (p:Persona)-[:POSSIEDE]->(s:Sim)-[r:CONNESSO_A {data_ora: $data_ora}]->(c:Cella)
+            WHERE distance(point({latitude: c.latitudine, longitude: c.longitudine}), point({latitude: $latitudine, longitude: $longitudine})) <= $raggio
+            RETURN p.id, p.nome, p.cognome
+            """,
+            data_ora=f"{data}T{ora}", latitudine=latitudine, longitudine=longitudine, raggio=raggio
+        )
+    driver.close()
+    return [record for record in result]
